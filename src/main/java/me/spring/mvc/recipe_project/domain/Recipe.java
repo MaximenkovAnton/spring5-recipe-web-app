@@ -21,6 +21,10 @@ public class Recipe {
     String source;
     String url;
     String directions;
+
+    @Enumerated(value = EnumType.STRING)
+    Difficulty difficulty;
+
     @Lob
     Byte[] image;
     @OneToOne(cascade = CascadeType.ALL)
