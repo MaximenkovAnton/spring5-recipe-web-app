@@ -22,6 +22,11 @@ public class Recipe {
     String url;
     String directions;
 
+    @ManyToMany
+    @JoinTable(name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    Set<Category> categories;
+
     @Enumerated(value = EnumType.STRING)
     Difficulty difficulty;
 
