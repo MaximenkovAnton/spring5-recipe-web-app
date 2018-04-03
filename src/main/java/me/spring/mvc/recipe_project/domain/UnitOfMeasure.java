@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Entity
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UnitOfMesure {
+public class UnitOfMeasure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

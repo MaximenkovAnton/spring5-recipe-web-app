@@ -22,5 +22,5 @@ public class Ingredient {
     Recipe recipe;
 
     @OneToOne(fetch = FetchType.EAGER)
-    UnitOfMesure unitOfMesure;
+    UnitOfMeasure unitOfMeasure;
 }
