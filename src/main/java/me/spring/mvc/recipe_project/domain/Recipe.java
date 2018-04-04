@@ -2,13 +2,16 @@ package me.spring.mvc.recipe_project.domain;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity
+@EqualsAndHashCode(of = "id")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Recipe {
     @Id
@@ -20,12 +23,14 @@ public class Recipe {
     Integer servings;
     String source;
     String url;
+
+    @Lob
     String directions;
 
     @ManyToMany
     @JoinTable(name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    Set<Category> categories;
+    Set<Category> categories = new HashSet<>();
 
     @Enumerated(value = EnumType.STRING)
     Difficulty difficulty;
@@ -36,5 +41,5 @@ public class Recipe {
     Note note;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    Set<Ingredient> ingredients;
+    Set<Ingredient> ingredients = new HashSet<>();
 }
