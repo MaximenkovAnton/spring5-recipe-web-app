@@ -12,10 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -37,12 +34,11 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     Category mexicanCategory;
     Category americanCategory;
 
-    private List<Recipe> getRecipes(){
+    private void initRecipes(){
         initRecipeList();
         initUnitsOfMeasure();
         initCategories();
         createNewRecipes();
-        return recipes;
     }
 
     private void createNewRecipes() {
@@ -63,9 +59,16 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         Note tacoNote = new Note();
         tacoNote.setRecipeNote("Soft tacos can replace the taco shells, if desired.");
         tacoNote.setRecipe(tacoRecipe);
-        tacoRecipe.setNote(tacoNote);
+        Set<Ingredient> ingredients = getTacoIngredients();
+        connectIngredientsWithRecipe(tacoRecipe, ingredients);
+        tacoRecipe.getCategories().add(mexicanCategory);
 
-        Set<Ingredient> ingredients = tacoRecipe.getIngredients();
+        recipes.add(tacoRecipe);
+
+    }
+
+    private Set<Ingredient> getTacoIngredients() {
+        Set<Ingredient> ingredients = new HashSet<>();
         ingredients.add(new Ingredient("Grilled chicken", new BigDecimal(4), eachUnit));
         ingredients.add(new Ingredient("Chili powder", new BigDecimal(0.5), teaspoonUnit));
         ingredients.add(new Ingredient("Ground cumin", new BigDecimal(0.5), teaspoonUnit));
@@ -73,11 +76,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         ingredients.add(new Ingredient("white corn taco shells", new BigDecimal(3), dashUnit));
         ingredients.add(new Ingredient("Hot Buffalo wing sauce", new BigDecimal(0.25), cupUnit));
         ingredients.add(new Ingredient("Crumbled blue cheese", new BigDecimal(0.25), cupUnit));
-        connectIngredientsWithRecipe(tacoRecipe, ingredients);
-        tacoRecipe.getCategories().add(mexicanCategory);
-
-        recipes.add(tacoRecipe);
-
+        return ingredients;
     }
 
     private void connectIngredientsWithRecipe(Recipe tacoRecipe, Set<Ingredient> ingredients) {
@@ -104,9 +103,17 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 "recipe ever. The key is to use avocados that are perfectly ripe."
         );
         guacNote.setRecipe(guacRecipe);
-        guacRecipe.setNote(guacNote);
 
-        Set<Ingredient> ingredients = guacRecipe.getIngredients();
+        Set<Ingredient> ingredients = getGuacIngredients();
+        connectIngredientsWithRecipe(guacRecipe,ingredients);
+        guacRecipe.getCategories().add(americanCategory);
+        guacRecipe.getCategories().add(mexicanCategory);
+
+        recipes.add(guacRecipe);
+    }
+
+    private Set<Ingredient> getGuacIngredients() {
+        Set<Ingredient> ingredients = new HashSet<>();
         ingredients.add(new Ingredient("Hass avocados", new BigDecimal(8), pintUnit));
         ingredients.add(new Ingredient("Tomatoes", new BigDecimal(3), eachUnit));
         ingredients.add(new Ingredient("Chopped fresh cilantro", new BigDecimal(0.5), cupUnit));
@@ -115,11 +122,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         ingredients.add(new Ingredient("Garlic", new BigDecimal(4), eachUnit));
         ingredients.add(new Ingredient("Limes", new BigDecimal(3), eachUnit));
         ingredients.add(new Ingredient("Salt", new BigDecimal(0.5), tablespoonUnit));
-        connectIngredientsWithRecipe(guacRecipe,ingredients);
-        guacRecipe.getCategories().add(americanCategory);
-        guacRecipe.getCategories().add(mexicanCategory);
-
-        recipes.add(guacRecipe);
+        return ingredients;
     }
 
     private void initCategories() {
@@ -153,6 +156,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        recipeRepository.saveAll(getRecipes());
+        initRecipes();
+        recipeRepository.saveAll(recipes);
     }
 }

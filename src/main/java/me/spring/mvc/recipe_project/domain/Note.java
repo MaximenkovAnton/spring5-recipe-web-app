@@ -19,4 +19,11 @@ public class Note {
 
     @Lob
     String recipeNote;
+
+    public void setRecipe(Recipe recipe) {
+        if(this.recipe != recipe) {
+            this.recipe = recipe;
+            recipe.setNote(this);
+        }
+    }
 }

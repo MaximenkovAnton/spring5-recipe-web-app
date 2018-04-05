@@ -42,4 +42,11 @@ public class Recipe {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     Set<Ingredient> ingredients = new HashSet<>();
+
+    public void setNote(Note note) {
+        if(this.note != note) {
+            this.note = note;
+            note.setRecipe(this);
+        }
+    }
 }
