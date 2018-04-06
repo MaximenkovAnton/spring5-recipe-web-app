@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@EqualsAndHashCode(exclude = {"ingredients", "categories"})
+@EqualsAndHashCode(exclude = {"ingredients", "note", "categories"})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Recipe {
     @Id
