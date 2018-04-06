@@ -49,11 +49,11 @@ public class IndexControllerTest {
     @Test
     public void getIndexPage() {
         //given
-        Set<Recipe> data = new HashSet<>();
         Recipe recipe1 = new Recipe();
         recipe1.setId(1L);
         Recipe recipe2 = new Recipe();
         recipe2.setId(2L);
+        Set<Recipe> data = new HashSet<>();
         data.add(recipe1);
         data.add(recipe2);
 
