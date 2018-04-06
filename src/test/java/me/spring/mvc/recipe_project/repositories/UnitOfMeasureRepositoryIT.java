@@ -1,7 +1,6 @@
 package me.spring.mvc.recipe_project.repositories;
 
 import me.spring.mvc.recipe_project.domain.UnitOfMeasure;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,6 @@ public class UnitOfMeasureRepositoryIT {
 
     @Autowired
     private UnitOfMeasureRepository repository;
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void findByUnit() {
