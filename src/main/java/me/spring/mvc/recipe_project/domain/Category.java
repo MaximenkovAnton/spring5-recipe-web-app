@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(exclude = "recipes")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Category {
     @Id
