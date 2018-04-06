@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
     private final RecipeService recipeService;
 
-    @RequestMapping({"", "/", "index"})
+    @RequestMapping({"", "index"})
     public String getIndexPage(Model model){
         model.addAttribute("recipes", recipeService.getRecipies());
         return "index";
