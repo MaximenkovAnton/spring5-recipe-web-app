@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1 class="text-center">Recipe app!</h1>
-<table class="table">
+<table class="table table-hover">
     <thead class="thead-dark">
         <tr>
             <th>ID</th>
@@ -18,11 +18,13 @@
             <th>View</th>
         </tr>
     </thead>
-    <tr th:each="recipe : ${recipes}">
-        <td th:text="${recipe.getId()}"/>
-        <td th:text="${recipe.getDescription()}"/>
-        <td><a th:href="@{'/recipe/view/' + ${recipe.id}}">View</a></td>
-    </tr>
+    <tbody>
+        <tr th:each="recipe : ${recipes}">
+            <td th:text="${recipe.getId()}"/>
+            <td th:text="${recipe.getDescription()}"/>
+            <td><a th:href="@{'/recipe/view/' + ${recipe.id}}">View</a></td>
+        </tr>
+    </tbody>
 </table>
 </body>
 </html>
