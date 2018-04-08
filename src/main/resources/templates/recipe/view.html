@@ -2,12 +2,49 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${recipe.getDescription()}"></title>
+    <title th:text="'Recipe app | ' + ${recipe.getDescription()}"></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous" th:src="@{/webjars/popper.js/1.12.9-1/popper.min.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
 <body>
-    <h1 class="text-center" th:text="${recipe.getDescription()}"/>
+<div class="d-flex bg-info sticky-top">
+    <a class="btn btn-danger btn-lg col-1" href="/"><<</a>
+    <h1 class="text-center col-10" th:text="${recipe.getDescription()}"/>
+</div>
+    <nav class="d-flex justify-content-center align-self-center inline-block">
+       <ul class="list-inline">
+            <li class="list-inline-item text-center"><h3>Categories:</h3></li>
+            <li class="list-inline-item text-center" th:each="category : ${recipe.getCategories()}">
+                <button type="button" class="btn btn-light"><h4 th:text="${category.getDescription()}" /></button>
+            </li>
+        </ul>
+    </nav>
+    <table class="table table-hover">
+        <tr th:if="${recipe.getPrepTime() != null}">
+            <td class="text-center"><h4>Prepare time: </h4></td>
+            <td><h4 th:text="${recipe.getPrepTime()} + ' min'" /></td>
+        </tr>
+        <tr th:if="${recipe.getCookTime() != null}">
+            <td class="text-center"><h4>Cook time: </h4></td>
+            <td><h4 th:text="${recipe.getCookTime() + ' min'}" /></td>
+        </tr>
+        <tr th:if="${recipe.getDifficulty() != null}">
+            <td class="text-center"><h4>Difficulty: </h4></td>
+            <td><h4 th:text="${recipe.getDifficulty()}" /></td>
+        </tr>
+        <tr th:if="${recipe.getServings() != null}">
+            <td class="text-center"><h4>Servings</h4></td>
+            <td><h4 th:text="${recipe.getServings()}" /></td>
+        </tr>
+        <tr th:if="${recipe.getUrl() != null}">
+            <td class="text-center"><h4>URL: </h4></td>
+            <td><h4 th:text="${recipe.getUrl()}" /></td>
+        </tr>
+    </table>
+    <div class="container">
+        <blockquote class="blockquote text-center" th:text="${recipe.getNote().getRecipeNote()}"/>
+        <h4 th:text="${recipe.getDirections()}"/>
+    </div>
 </body>
 </html>
